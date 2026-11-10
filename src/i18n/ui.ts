@@ -128,6 +128,9 @@ const ui = {
     'exp.now': 'Now',
     'exp.present': 'present',
     'exp.timelineTitle': 'Timeline',
+    'edu.kicker': '// Education',
+    'edu.title': 'Education',
+    'edu.sub': 'Degrees and formal training.',
 
     // architecture
     'arch.kicker': '// Meta',
@@ -281,6 +284,9 @@ const ui = {
     'exp.now': 'Actuel',
     'exp.present': 'aujourd’hui',
     'exp.timelineTitle': 'Chronologie',
+    'edu.kicker': '// Formation',
+    'edu.title': 'Diplômes & formation',
+    'edu.sub': 'Diplômes et formations initiales.',
 
     'arch.kicker': '// Méta',
     'arch.title': 'Comment ce site est construit',

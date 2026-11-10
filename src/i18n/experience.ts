@@ -9,6 +9,14 @@ export interface ExperienceItem {
   bullets: string[];
 }
 
+export interface EducationItem {
+  id: string;
+  when: string;
+  school: string; // institution name
+  degree: string; // degree title
+  details: string; // one or two sentences
+}
+
 /**
  * ⚠️ TODO(you): verify dates, orgs and bullets. The details below are educated
  * placeholders built from your public LinkedIn profile — correct them freely.
@@ -89,6 +97,33 @@ export const experience: Record<Locale, ExperienceItem[]> = {
         'Co-auteur d’un article de conception de mécanismes sur la collusion tacite dans les marchés de l’électricité (2018).',
         'Un socle analytique réinvesti depuis dans la modélisation des coûts et le TCO cloud.',
       ],
+    },
+  ],
+};
+
+/**
+ * ⚠️ TODO(you): education is a placeholder — replace with your real degrees
+ * (institution, title, years). The Grenoble work is inferred from your profile.
+ */
+export const education: Record<Locale, EducationItem[]> = {
+  en: [
+    {
+      id: 'master',
+      when: '20XX — 20XX', // ⚠️ e.g. "2016 — 2019"
+      school: 'University / Grande école — Grenoble, France', // ⚠️ replace
+      degree: "Master's degree — energy & applied economics", // ⚠️ replace
+      details:
+        'Research and analysis on energy economics: municipal carbon footprints, energy-renovation subsidy leverage, coordination of grid investments for renewables. Co-authored peer-reviewed research on power-market design (2018).',
+    },
+  ],
+  fr: [
+    {
+      id: 'master',
+      when: '20XX — 20XX', // ⚠️ ex. "2016 — 2019"
+      school: 'Université / Grande école — Grenoble, France', // ⚠️ à remplacer
+      degree: 'Master — économie de l’énergie & économie appliquée', // ⚠️ à remplacer
+      details:
+        'Recherche et analyse en économie de l’énergie : bilans carbone communaux, effet de levier des subventions de rénovation, coordination des investissements réseaux pour les énergies renouvelables. Co-auteur d’une recherche sur la conception de mécanismes des marchés de l’électricité (2018).',
     },
   ],
 };

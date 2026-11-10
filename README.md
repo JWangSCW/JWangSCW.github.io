@@ -29,7 +29,7 @@ Before publishing, work through this list:
 6. **Certifications** (`src/content/certs/{en,fr}/*.md`) — the AWS / Scaleway / Huawei entries are
    **drafts** (visible in dev, hidden in production). Fill in the real details and set `draft: false`.
    Real credentials from your profile are already included and verifiable.
-7. **Experience** (`src/i18n/experience.ts`) — verify dates and bullets.
+7. **Experience & education** (`src/i18n/experience.ts`) — verify dates and bullets; the education entry at the bottom of the file is a placeholder (the site does not guess your real degrees).
 8. **Stats** (`src/i18n/ui.ts`) — the hero metrics ("8+ years", "€M influenced") are placeholders; adjust to your real numbers.
 9. **Hero terminal** (`src/i18n/ui.ts`, `term.*` keys) — tune the typed lines.
 10. **Favicon / og image** — `public/favicon.svg` and `public/og.png` (referenced in the base layout).
@@ -38,10 +38,22 @@ Before publishing, work through this list:
 
 Every piece of content is a Markdown file with a small schema (see `src/content.config.ts`).
 
-- **Case study** — copy an existing file in `src/content/cases/en/` + `src/content/cases/fr/`.
-- **Project** — same, under `src/content/projects/`.
-- **Article** — same, under `src/content/posts/`. Set `draft: true` to preview locally without publishing.
-- **Certification** — add a file under `src/content/certs/{en,fr}/`; keep `en` and `fr` in sync (same filename).
+### Where each piece of content lives
+
+| Content | File(s) to create/edit | Notes |
+| --- | --- | --- |
+| Case studies | `src/content/cases/en/<slug>.md` + `src/content/cases/fr/<slug>.md` | Same filename in both languages. Copy an existing case as your template; set `template: false` when it's a real engagement. |
+| Projects | `src/content/projects/en/<slug>.md` + `src/content/projects/fr/<slug>.md` | Set `status: live \| lab \| wip` and optional `github` / `demo` links. |
+| Articles / writing | `src/content/posts/en/<slug>.md` + `src/content/posts/fr/<slug>.md` | Set `draft: true` to preview locally without publishing. |
+| Certifications | `src/content/certs/en/<slug>.md` + `src/content/certs/fr/<slug>.md` | Real ones are already there (verifiable). Add missing ones; set `draft: false`. |
+| Career experience | `src/i18n/experience.ts` → the `experience` array | Structured data, per language (EN + FR). |
+| Education | `src/i18n/experience.ts` → the `education` array | Same file, below the experience array. |
+| Profile info (email, GitHub, resume) | `src/i18n/site.ts` | Single source of truth used site-wide. |
+| UI labels / hero text / stats | `src/i18n/ui.ts` | All visible strings, EN and FR. |
+
+A case study needs these frontmatter fields (see existing files for examples):
+`title, client, sector, duration, role, year, summary, impact, tags, stack, featured, order, template`.
+Keep `en/` and `fr/` files in sync — the slug (filename) must be identical in both folders.
 
 With `trailingSlash: "always"`, URLs look like `/cases/<slug>/` (EN) and `/fr/cases/<slug>/` (FR).
 
