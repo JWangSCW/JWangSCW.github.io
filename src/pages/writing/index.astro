@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import WritingList from '../../sections/WritingList.astro';
+import { t } from '../../i18n/ui';
+---
+
+<Base title={t('en', 'writing.title')} description={t('en', 'writing.sub')} lang="en">
+  <WritingList lang="en" />
+</Base>

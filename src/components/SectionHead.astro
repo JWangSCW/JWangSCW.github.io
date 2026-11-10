@@ -1,0 +1,23 @@
+---
+import { t, type UIKey } from '../i18n/ui';
+import type { Locale } from '../lib/content';
+
+interface Props {
+  kickerKey: UIKey;
+  titleKey?: UIKey;
+  title?: string;
+  subKey?: UIKey;
+  sub?: string;
+  lang: Locale;
+}
+
+const { kickerKey, titleKey, title, subKey, sub, lang } = Astro.props;
+const heading = title ?? (titleKey ? t(lang, titleKey) : '');
+const subtext = sub ?? (subKey ? t(lang, subKey) : undefined);
+---
+
+<div class="section-head">
+  <div class="kicker">{t(lang, kickerKey)}</div>
+  <h2>{heading}</h2>
+  {subtext && <p>{subtext}</p>}
+</div>

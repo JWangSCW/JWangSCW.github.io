@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import CasesList from '../../sections/CasesList.astro';
+import { t } from '../../i18n/ui';
+---
+
+<Base title={t('en', 'cases.title')} description={t('en', 'cases.sub')} lang="en">
+  <CasesList lang="en" />
+</Base>

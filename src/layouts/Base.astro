@@ -1,0 +1,211 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+import { SITE } from '../i18n/site';
+import { t, type UIKey } from '../i18n/ui';
+import type { Locale } from '../lib/content';
+import { altLocalePath } from '../lib/content';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Locale;
+}
+
+const { title, description, lang } = Astro.props;
+const pathname = Astro.url.pathname;
+const year = new Date().getFullYear();
+
+const pageHref = (path: string) => (lang === 'en' ? path : `/fr${path}`);
+
+const nav = [
+  { key: 'nav.home', href: '/', exact: true },
+  { key: 'nav.experience', href: '/experience/', exact: false },
+  { key: 'nav.cases', href: '/cases/', exact: false },
+  { key: 'nav.projects', href: '/projects/', exact: false },
+  { key: 'nav.writing', href: '/writing/', exact: false },
+  { key: 'nav.certs', href: '/certs/', exact: false },
+  { key: 'nav.contact', href: '/contact/', exact: false },
+] as const;
+
+const isActive = (item: (typeof nav)[number]) => {
+  const href = pageHref(item.href);
+  if (item.exact) {
+    return pathname === href || pathname === href.replace(/\/+$/, '');
+  }
+  return pathname.startsWith(href);
+};
+
+const alt = altLocalePath(pathname, lang, lang === 'en' ? 'fr' : 'en');
+const docTitle = title.includes(SITE.name) ? title : `${title} · ${SITE.name}`;
+const pathLabel = pathname === '/' || pathname === '/fr/' ? '' : pathname;
+const canonical = `${import.meta.env.SITE}${pathLabel}`;
+
+const footerNav = [
+  { key: 'nav.experience', href: '/experience/' },
+  { key: 'nav.cases', href: '/cases/' },
+  { key: 'nav.projects', href: '/projects/' },
+  { key: 'nav.writing', href: '/writing/' },
+  { key: 'nav.certs', href: '/certs/' },
+  { key: 'nav.architecture', href: '/architecture/' },
+] as const;
+---
+
+<!doctype html>
+<html lang={lang === 'en' ? 'en' : 'fr'}>
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline>
+      /* mark JS availability so the terminal reveal only hides lines when JS can type them */
+      document.documentElement.classList.add('js');
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <title>{docTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={docTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:image" content={`${import.meta.env.SITE}/og.png`} />
+    <meta name="theme-color" content="#070b13" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <header class="nav">
+      <div class="container nav-inner">
+        <a class="brand" href={pageHref('/')} aria-label={SITE.name}>
+          <span class="brand-mark">JW</span>
+          <span>
+            {SITE.name}
+            <small>{SITE.role}</small>
+          </span>
+        </a>
+
+        <nav aria-label="primary">
+          <ul class="nav-links">
+            {
+              nav.map((item) => (
+                <li>
+                  <a href={pageHref(item.href)} class:list={{ active: isActive(item) }}>
+                    {t(lang, item.key)}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <div class="locale-switch">
+          <a href={lang === 'en' ? pathname : alt} class:list={{ current: lang === 'en' }} aria-label={t(lang, 'lang.label')}>
+            EN
+          </a>
+          <a href={lang === 'fr' ? pathname : alt} class:list={{ current: lang === 'fr' }} aria-label={t(lang, 'lang.label')}>
+            FR
+          </a>
+        </div>
+
+        <a class="btn btn--primary nav-cta" href={pageHref('/contact/')}>
+          {t(lang, 'nav.contact')}
+        </a>
+
+        <button class="nav-burger" data-menu-toggle aria-label={t(lang, 'nav.menu')} aria-expanded="false">
+          ☰
+        </button>
+      </div>
+
+      <div class="mobile-menu" data-mobile-menu>
+        {
+          nav.map((item) => (
+            <a href={pageHref(item.href)}>{t(lang, item.key)}</a>
+          ))
+        }
+        <a href={pageHref('/architecture/')}>{t(lang, 'nav.architecture')}</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <a class="brand" href={pageHref('/')}>
+              <span class="brand-mark">JW</span>
+              <span>
+                {SITE.name}
+                <small>{SITE.role}</small>
+              </span>
+            </a>
+            <p class="footer-tagline" style="margin-top: 18px;">{t(lang, 'footer.tagline')}</p>
+          </div>
+
+          <div>
+            <h4>{t(lang, 'footer.links')}</h4>
+            <ul>
+              {
+                footerNav.map((item) => (
+                  <li>
+                    <a href={pageHref(item.href)}>{t(lang, item.key)}</a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div>
+            <h4>{t(lang, 'nav.contact')}</h4>
+            <ul>
+              <li><a href={pageHref('/contact/')}>{t(lang, 'contact.email')}</a></li>
+              <li><a href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
+              <li><a href={SITE.github} target="_blank" rel="noopener">GitHub</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© {year} {SITE.name}. {t(lang, 'footer.rights')}</span>
+          <span>{t(lang, 'footer.built')}</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // mobile menu toggle
+      const toggle = document.querySelector('[data-menu-toggle]');
+      const menu = document.querySelector('[data-mobile-menu]');
+      toggle?.addEventListener('click', () => {
+        const open = menu?.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(!!open));
+      });
+      // close the menu after navigating
+      menu?.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).closest('a')) menu.classList.remove('open');
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  .skip-link {
+    position: fixed;
+    left: 16px;
+    top: -60px;
+    z-index: 100;
+    padding: 10px 18px;
+    border-radius: 8px;
+    background: var(--brand);
+    color: #060a14;
+    font-weight: 700;
+    transition: top 0.2s;
+  }
+  .skip-link:focus {
+    top: 16px;
+  }
+</style>

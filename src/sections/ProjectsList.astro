@@ -1,0 +1,45 @@
+---
+import { t } from '../i18n/ui';
+import { getEntries, type Locale } from '../lib/content';
+import ProjectCard from '../components/ProjectCard.astro';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const projects = (await getEntries('projects', lang)).sort(
+  (a, b) => b.data.order - a.data.order || b.data.year.localeCompare(a.data.year)
+);
+---
+
+<section class="page-head">
+  <div class="container">
+    <div class="kicker reveal">{t(lang, 'projects.kicker')}</div>
+    <h1 class="reveal" style="--d:1">{t(lang, 'projects.title')}</h1>
+    <p class="lead reveal" style="--d:2">{t(lang, 'projects.sub')}</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 40px;">
+  <div class="container">
+    <div class="card-grid">
+      {projects.map((p) => (
+        <ProjectCard
+          lang={lang}
+          slug={p.slug}
+          title={p.data.title}
+          description={p.data.description}
+          status={p.data.status}
+          year={p.data.year}
+          tags={p.data.tags}
+          stack={p.data.stack}
+          github={p.data.github}
+          demo={p.data.demo}
+          featured={p.data.featured}
+        />
+      ))}
+    </div>
+  </div>
+</section>

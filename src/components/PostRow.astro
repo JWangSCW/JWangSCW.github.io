@@ -1,0 +1,59 @@
+---
+import { t } from '../i18n/ui';
+import type { Locale } from '../lib/content';
+
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  pubDate: Date;
+  tags: string[];
+  body: string;
+  draft?: boolean;
+  lang: Locale;
+}
+
+const p = Astro.props;
+const href = (lang: Locale, slug: string) => (lang === 'en' ? `/writing/${slug}/` : `/fr/writing/${slug}/`);
+const minutes = Math.max(1, Math.round(p.body.trim().split(/\s+/).length / 220));
+const dateLabel = p.pubDate.toLocaleDateString(p.lang === 'en' ? 'en-GB' : 'fr-FR', {
+  year: 'numeric',
+  month: 'short',
+  day: '2-digit',
+});
+---
+
+<article class="post-row">
+  <time datetime={p.pubDate.toISOString()}>{dateLabel}</time>
+  <div>
+    <h3>
+      {p.draft && <span class="chip chip--draft">{t(p.lang, 'writing.draft')}</span>}
+      {p.title}
+    </h3>
+    <p>{p.description}</p>
+    <div class="meta">
+      {minutes} {t(p.lang, 'writing.min')}
+      {p.tags.length > 0 && ` · ${p.tags.join(' · ')}`}
+    </div>
+  </div>
+  <a class="card-link" href={href(p.lang, p.slug)} aria-label={p.title}></a>
+</article>
+
+<style is:global>
+  .post-row {
+    position: relative;
+  }
+  .empty-note {
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius);
+    padding: 28px;
+    color: var(--txt-2);
+    background: var(--panel);
+    text-align: center;
+  }
+  .chip--draft {
+    color: var(--warn);
+    border-color: rgba(251, 191, 36, 0.4);
+    margin-right: 8px;
+  }
+</style>

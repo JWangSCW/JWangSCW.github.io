@@ -1,0 +1,85 @@
+---
+import { t } from '../i18n/ui';
+import type { Locale } from '../lib/content';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const lines = [
+  { cmd: t(lang, 'term.1.cmd'), out: t(lang, 'term.1.out') },
+  { cmd: t(lang, 'term.2.cmd'), out: t(lang, 'term.2.out') },
+  { cmd: t(lang, 'term.3.cmd'), out: t(lang, 'term.3.out'), ok: true },
+  { cmd: t(lang, 'term.4.cmd'), out: t(lang, 'term.4.out'), ok: true },
+];
+---
+
+<div class="terminal">
+  <div class="terminal-bar">
+    <span class="t-dot"></span>
+    <span class="t-dot"></span>
+    <span class="t-dot"></span>
+    <span class="t-title">~/{t(lang, 'hero.terminal.title')}</span>
+  </div>
+  <div class="terminal-body" data-terminal>
+    {
+      lines.map((line) => (
+        <>
+          <span class="term-line term-cmd">
+            <span class="prompt">$ </span><span class="cmd-text" data-text={line.cmd}></span>
+          </span>
+          <span class="term-line term-out" class:list={{ ok: line.ok }}>
+            <span class={line.ok ? 'ok' : ''}>{line.out}</span>
+          </span>
+        </>
+      ))
+    }
+    <span class="term-line"><span class="cursor"></span></span>
+  </div>
+</div>
+
+<script>
+  const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+  async function run() {
+    const lines = [...document.querySelectorAll<HTMLElement>('[data-terminal] .term-line')];
+    let cursor = document.createElement('span');
+    cursor.className = 'cursor';
+
+    for (const line of lines) {
+      const cmd = line.querySelector<HTMLElement>('.cmd-text');
+      if (cmd) {
+        const text = cmd.dataset.text ?? '';
+        line.appendChild(cursor);
+        cmd.textContent = '';
+        for (let i = 0; i <= text.length; i++) {
+          cmd.textContent = text.slice(0, i);
+          await delay(30 + Math.random() * 26);
+        }
+        // blink once filled, then move on
+        await delay(230);
+        cursor.remove();
+      } else {
+        line.appendChild(cursor);
+      }
+      line.classList.add('typed');
+      await delay(210);
+    }
+  }
+
+  // start after a beat so the page paints first
+  window.addEventListener('DOMContentLoaded', () => setTimeout(run, 450));
+</script>
+
+<style>
+  /* hidden only when JS is present — lines are revealed as they are typed */
+  html.js .term-line {
+    opacity: 0;
+  }
+  html.js .term-line.typed {
+    opacity: 1;
+    animation: termIn 0.35s var(--ease) forwards;
+  }
+</style>

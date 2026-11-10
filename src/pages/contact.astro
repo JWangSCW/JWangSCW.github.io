@@ -1,0 +1,9 @@
+---
+import Base from '../layouts/Base.astro';
+import Contact from '../sections/Contact.astro';
+import { t } from '../i18n/ui';
+---
+
+<Base title={t('en', 'contact.title')} description={t('en', 'contact.sub')} lang="en">
+  <Contact lang="en" />
+</Base>

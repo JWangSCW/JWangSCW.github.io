@@ -1,0 +1,40 @@
+---
+import { t } from '../i18n/ui';
+import { getEntries, type Locale } from '../lib/content';
+import PostRow from '../components/PostRow.astro';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const posts = (await getEntries('posts', lang)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<section class="page-head">
+  <div class="container">
+    <div class="kicker reveal">{t(lang, 'writing.kicker')}</div>
+    <h1 class="reveal" style="--d:1">{t(lang, 'writing.title')}</h1>
+    <p class="lead reveal" style="--d:2">{t(lang, 'writing.sub')}</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 40px;">
+  <div class="container">
+    {posts.map((p) => (
+      <PostRow
+        lang={lang}
+        slug={p.slug}
+        title={p.data.title}
+        description={p.data.description}
+        pubDate={p.data.pubDate}
+        tags={p.data.tags}
+        body={p.body}
+        draft={p.data.draft}
+      />
+    ))}
+  </div>
+</section>

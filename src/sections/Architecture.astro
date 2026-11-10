@@ -1,0 +1,234 @@
+---
+import { t } from '../i18n/ui';
+import type { Locale } from '../lib/content';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const fr = lang === 'fr';
+
+const rows = [
+  {
+    layer: fr ? 'Front-end' : 'Frontend',
+    tech: 'Astro (static generation)',
+    why: fr
+      ? 'Statique d’abord : rapide, sécurisé, gratuit à héberger — et piloté par du contenu Markdown que je peux éditer sans toucher au code.'
+      : 'Static-first: fast, secure and cheap to host — and driven by Markdown content I can edit without touching code.',
+  },
+  {
+    layer: fr ? 'Contenu' : 'Content',
+    tech: 'Markdown content collections',
+    why: fr
+      ? 'Études de cas, projets, articles et certifications vivent dans des fichiers .md bilingues (en/ fr), validés par un schéma.'
+      : 'Case studies, projects, posts and credentials live as bilingual (en/fr) Markdown files validated by a schema.',
+  },
+  {
+    layer: 'CI/CD',
+    tech: 'Git + GitHub Actions',
+    why: fr
+      ? 'Chaque push déclenche build, checks et déploiement automatique. Zéro déploiement manuel, comme au travail.'
+      : 'Every push triggers build, checks and an automatic deploy. No manual deployments, just like at work.',
+  },
+  {
+    layer: 'IaC',
+    tech: 'Terraform / OpenTofu',
+    why: fr
+      ? 'Domaine, DNS et projet d’hébergement sont décrits en code (./infra) — reproductibles et audités.'
+      : 'Domain, DNS and the hosting project are described as code (./infra) — reproducible and auditable.',
+  },
+  {
+    layer: fr ? 'Hébergement' : 'Hosting',
+    tech: 'Cloudflare Pages · CDN',
+    why: fr
+      ? 'Edge mondial, HTTPS et cache gérés ; coût marginal ≈ 0. Peut être remplacé par GitHub Pages ou votre choix.'
+      : 'Global edge, managed HTTPS and caching; marginal cost ≈ 0. Swappable for GitHub Pages or your preference.',
+  },
+  {
+    layer: fr ? 'Observabilité' : 'Observability',
+    tech: 'Analytics + uptime monitor',
+    why: fr
+      ? 'Trafic et disponibilité suivis (Cloudflare Analytics, UptimeRobot) — un site sans monitoring n’est pas une plateforme.'
+      : 'Traffic and availability tracked (Cloudflare Analytics, UptimeRobot) — a site without monitoring is not a platform.',
+  },
+];
+
+const steps = fr
+  ? [
+      'J’édite du contenu en Markdown (ou du code) dans le dépôt Git.',
+      'GitHub Actions build le site (Astro) et valide les schémas de contenu.',
+      'Terraform garantit que le domaine, le DNS et l’hébergement correspondent au code.',
+      'Le résultat est publié sur le CDN en quelques secondes, en HTTPS.',
+      'Le tout est versionné, réparable et re-déployable en un clic — exactement la discipline que je vends aux clients.',
+    ]
+  : [
+      'I edit content in Markdown (or code) in the Git repository.',
+      'GitHub Actions builds the site (Astro) and validates content schemas.',
+      'Terraform ensures domain, DNS and hosting match the code.',
+      'The result is published to the CDN within seconds, over HTTPS.',
+      'Everything is versioned, recoverable and redeployable in one click — exactly the discipline I sell to customers.',
+    ];
+---
+
+<section class="page-head">
+  <div class="container">
+    <div class="kicker reveal">{t(lang, 'arch.kicker')}</div>
+    <h1 class="reveal" style="--d:1">{t(lang, 'arch.title')}</h1>
+    <p class="lead reveal" style="--d:2">{t(lang, 'arch.sub')}</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 40px;">
+  <div class="container">
+    <figure class="diagram-frame" aria-hidden="true">
+      <svg viewBox="0 0 760 320" role="img" aria-label="architecture diagram">
+        <defs>
+          <marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+            <path d="M0,0 L7,3.5 L0,7 Z" fill="#4fd1ff" />
+          </marker>
+        </defs>
+
+        <!-- connectors -->
+        <path class="flow" d="M150,104 L150,152" />
+        <path class="flow" d="M150,196 L150,244" />
+        <path class="flow" d="M610,104 L610,152" />
+        <path class="flow" d="M610,196 L610,244" />
+        <path class="flow" d="M380,104 L380,152" />
+        <path class="flow" d="M380,196 L380,244" />
+        <path class="flow" d="M610,282 L610,298 L470,298" />
+
+        <!-- row 1 -->
+        <g class="box" transform="translate(40,40)">
+          <rect width="220" height="64" rx="10" />
+          <text x="14" y="24">GitHub monorepo</text>
+          <text x="14" y="44" class="sub">content/ · src/ · infra/</text>
+        </g>
+        <g class="box" transform="translate(280,40)">
+          <rect width="220" height="64" rx="10" />
+          <text x="14" y="24">Terraform / OpenTofu</text>
+          <text x="14" y="44" class="sub">domain · DNS · hosting</text>
+        </g>
+        <g class="box" transform="translate(520,40)">
+          <rect width="200" height="64" rx="10" />
+          <text x="14" y="24">GitHub Actions</text>
+          <text x="14" y="44" class="sub">build · validate · deploy</text>
+        </g>
+
+        <!-- row 2 -->
+        <g class="box" transform="translate(40,152)">
+          <rect width="340" height="64" rx="10" />
+          <text x="14" y="24">Astro static build</text>
+          <text x="14" y="44" class="sub">markdown → HTML · hashed assets</text>
+        </g>
+        <g class="box" transform="translate(480,152)">
+          <rect width="240" height="64" rx="10" />
+          <text x="14" y="24">Cloudflare Pages · CDN</text>
+          <text x="14" y="44" class="sub">HTTPS · caching · analytics</text>
+        </g>
+
+        <!-- visitor -->
+        <g class="box" transform="translate(360,252)">
+          <rect width="150" height="58" rx="28" fill="url(#gradV)" />
+          <text x="75" y="26" style="text-anchor:middle">👤</text>
+          <text x="75" y="46" style="text-anchor:middle" class="sub">Visitor</text>
+        </g>
+      </svg>
+      <figcaption>{fr ? 'Schéma de déploiement de ce site — diagramme à titre illustratif.' : 'Deployment schematic of this site — illustrative diagram.'}</figcaption>
+    </figure>
+
+    <div style="height: 46px;"></div>
+
+    <table class="arch-table">
+      <thead>
+        <tr>
+          <th>{t(lang, 'arch.table.name')}</th>
+          <th>{t(lang, 'arch.table.tech')}</th>
+          <th>{t(lang, 'arch.table.why')}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr>
+            <td>{r.layer}</td>
+            <td>{r.tech}</td>
+            <td>{r.why}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <div style="margin-top: 46px;">
+      <h2 class="cert-group-title">{fr ? 'Cycle de déploiement' : 'Deployment loop'}</h2>
+      <ol class="steps">
+        {steps.map((s) => <li>{s}</li>)}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .diagram-frame {
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(500px 200px at 30% 0%, rgba(141, 123, 255, 0.08), transparent 60%),
+      linear-gradient(180deg, var(--panel-2), var(--panel));
+    padding: 18px;
+    max-width: 860px;
+  }
+  .diagram-frame svg {
+    width: 100%;
+    height: auto;
+  }
+  .diagram-frame figcaption {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--txt-3);
+    margin-top: 10px;
+  }
+  .diagram-frame .box rect {
+    fill: var(--panel-3);
+    stroke: var(--line-strong);
+    stroke-width: 1.2;
+  }
+  .diagram-frame .box text {
+    fill: var(--txt);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 650;
+  }
+  .diagram-frame .box text.sub {
+    fill: var(--txt-3);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+  }
+  .diagram-frame .flow {
+    stroke: var(--brand-2);
+    stroke-width: 1.6;
+    stroke-dasharray: 7 6;
+    fill: none;
+    marker-end: url(#ah);
+    animation: dash 1.4s linear infinite;
+  }
+  @keyframes dash {
+    to {
+      stroke-dashoffset: -26;
+    }
+  }
+  #gradV {
+    stop-color: var(--brand);
+    stop-opacity: 1;
+  }
+  .steps {
+    display: grid;
+    gap: 10px;
+    padding-left: 22px;
+    color: var(--txt-2);
+  }
+  .steps li::marker {
+    color: var(--brand-2);
+  }
+</style>

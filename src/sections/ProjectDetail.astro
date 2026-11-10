@@ -1,0 +1,115 @@
+---
+import { render } from 'astro:content';
+import { t } from '../i18n/ui';
+import { getEntries, type Locale } from '../lib/content';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'projects'> & { slug: string };
+  lang: Locale;
+}
+
+const { entry, lang } = Astro.props;
+const { Content } = await render(entry);
+const page = (path: string) => (lang === 'en' ? path : `/fr${path}`);
+
+const siblings = (await getEntries('projects', lang)).sort(
+  (a, b) => b.data.order - a.data.order || b.data.year.localeCompare(a.data.year)
+);
+const idx = siblings.findIndex((c) => c.slug === entry.slug);
+const next = idx === -1 ? undefined : siblings[(idx + 1) % siblings.length];
+const statusLabel =
+  entry.data.status === 'live'
+    ? t(lang, 'projects.status.live')
+    : entry.data.status === 'lab'
+      ? t(lang, 'projects.status.lab')
+      : t(lang, 'projects.status.wip');
+---
+
+<section class="page-head">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href={page('/projects/')}>← {t(lang, 'projects.back')}</a>
+    </nav>
+    <div class="kicker reveal" style="margin-top: 22px;">
+      {statusLabel} · {entry.data.year}
+    </div>
+    <h1 class="reveal" style="--d:1">{entry.data.title}</h1>
+    <p class="lead reveal" style="--d:2">{entry.data.description}</p>
+    <div class="hero-actions reveal" style="--d:3; margin-top: 24px;">
+      {entry.data.github && (
+        <a class="btn btn--ghost" href={entry.data.github} target="_blank" rel="noopener">
+          {t(lang, 'projects.code')} <span class="arrow">↗</span>
+        </a>
+      )}
+      {entry.data.demo && (
+        <a class="btn btn--primary" href={entry.data.demo} target="_blank" rel="noopener">
+          {t(lang, 'projects.demo')} <span class="arrow">↗</span>
+        </a>
+      )}
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 36px;">
+  <div class="container">
+    <div class="card-foot" style="margin-bottom: 34px;">
+      {entry.data.stack.map((s) => <span class="chip chip--brand">{s}</span>)}
+      {entry.data.tags.map((s) => <span class="chip">{s}</span>)}
+    </div>
+    <div class="article">
+      <div class="article-content reveal">
+        <Content />
+      </div>
+    </div>
+
+    {
+      next && (
+        <nav class="next-case">
+          <a href={page(`/projects/${next.slug}/`)}>
+            <span class="m-label">{t(lang, 'cases.next')}</span>
+            <strong>{next.data.title} <span class="arrow">→</span></strong>
+          </a>
+        </nav>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .breadcrumb a {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--txt-2);
+  }
+  .breadcrumb a:hover {
+    color: var(--brand-2);
+  }
+  .m-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--txt-3);
+    margin-bottom: 4px;
+  }
+  .next-case {
+    margin-top: 60px;
+    border-top: 1px solid var(--line);
+    padding-top: 26px;
+    display: grid;
+    gap: 6px;
+  }
+  .next-case a {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .next-case strong {
+    font-size: 19px;
+  }
+  .next-case:hover strong {
+    color: var(--brand-2);
+  }
+</style>

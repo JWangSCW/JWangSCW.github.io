@@ -1,0 +1,9 @@
+---
+import Base from '../layouts/Base.astro';
+import Experience from '../sections/Experience.astro';
+import { t } from '../i18n/ui';
+---
+
+<Base title={t('en', 'exp.title')} description={t('en', 'exp.sub')} lang="en">
+  <Experience lang="en" title={t('en', 'exp.title')} description={t('en', 'exp.sub')} />
+</Base>

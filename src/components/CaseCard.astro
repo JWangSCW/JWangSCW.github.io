@@ -1,0 +1,36 @@
+---
+import type { Locale } from '../lib/content';
+
+interface Props {
+  slug: string;
+  title: string;
+  client: string;
+  sector: string;
+  duration: string;
+  year: string;
+  summary: string;
+  impact: string;
+  tags: string[];
+  featured?: boolean;
+  template?: boolean;
+  lang: Locale;
+}
+
+const p = Astro.props;
+const href = (lang: Locale, slug: string) => (lang === 'en' ? `/cases/${slug}/` : `/fr/cases/${slug}/`);
+---
+
+<article class="card">
+  {p.featured && <span class="featured-tag"><span class="arrow">★</span></span>}
+  {p.template && <span class="chip" style="position:absolute; top:18px; left:18px;">template</span>}
+  <div class="card-meta">
+    {p.sector} · {p.year} · {p.duration}
+  </div>
+  <h3>{p.title}</h3>
+  <p class="card-sub">{p.summary}</p>
+  <div class="impact-box">{p.impact}</div>
+  <div class="card-foot">
+    {p.tags.slice(0, 4).map((tag) => <span class="chip">{tag}</span>)}
+  </div>
+  <a class="card-link" href={href(p.lang, p.slug)} aria-label={p.title}></a>
+</article>

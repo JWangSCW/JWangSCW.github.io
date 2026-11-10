@@ -1,0 +1,20 @@
+---
+import Base from '../../../layouts/Base.astro';
+import CaseDetail from '../../../sections/CaseDetail.astro';
+import { getEntries } from '../../../lib/content';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getEntries('cases', 'fr');
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry: entry as CollectionEntry<'cases'> },
+  }));
+}
+
+const { entry } = Astro.props;
+---
+
+<Base title={entry.data.title} description={entry.data.summary} lang="fr">
+  <CaseDetail entry={entry} lang="fr" />
+</Base>

@@ -1,0 +1,62 @@
+---
+import { t } from '../i18n/ui';
+import type { Locale } from '../lib/content';
+
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  status: 'live' | 'lab' | 'wip';
+  year: string;
+  tags: string[];
+  stack: string[];
+  github?: string;
+  demo?: string;
+  featured?: boolean;
+  lang: Locale;
+}
+
+const p = Astro.props;
+const href = (lang: Locale, slug: string) => (lang === 'en' ? `/projects/${slug}/` : `/fr/projects/${slug}/`);
+const statusLabel = p.status === 'live' ? t(p.lang, 'projects.status.live') : p.status === 'lab' ? t(p.lang, 'projects.status.lab') : t(p.lang, 'projects.status.wip');
+---
+
+<article class="card">
+  {p.featured && <span class="featured-tag">{t(p.lang, 'projects.featured')}</span>}
+  <div class="card-meta">
+    {statusLabel} · {p.year}
+  </div>
+  <h3>{p.title}</h3>
+  <p class="card-sub">{p.description}</p>
+  <div class="card-foot" style="margin-top:auto;">
+    {p.stack.slice(0, 5).map((s) => <span class="chip chip--brand">{s}</span>)}
+  </div>
+  {
+    p.github || p.demo ? (
+      <div class="card-links">
+        {p.github && <a class="txt-link" href={p.github} target="_blank" rel="noopener">{t(p.lang, 'projects.code')} ↗</a>}
+        {p.demo && <a class="txt-link" href={p.demo} target="_blank" rel="noopener">{t(p.lang, 'projects.demo')} ↗</a>}
+      </div>
+    ) : null
+  }
+  <a class="card-link" href={href(p.lang, p.slug)} aria-label={p.title}></a>
+</article>
+
+<style>
+  .card-links {
+    display: flex;
+    gap: 18px;
+    margin-top: 4px;
+    position: relative;
+    z-index: 2;
+  }
+  .txt-link {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--brand-2);
+    font-weight: 620;
+  }
+  .txt-link:hover {
+    text-decoration: underline;
+  }
+</style>

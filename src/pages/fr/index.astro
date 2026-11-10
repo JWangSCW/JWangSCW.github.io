@@ -1,0 +1,10 @@
+---
+import Base from '../../layouts/Base.astro';
+import Home from '../../sections/Home.astro';
+import { t } from '../../i18n/ui';
+import { SITE } from '../../i18n/site';
+---
+
+<Base title={`${SITE.name} — ${SITE.role}`} description={t('fr', 'hero.lead')} lang="fr">
+  <Home lang="fr" title="home" description={t('fr', 'hero.lead')} />
+</Base>
