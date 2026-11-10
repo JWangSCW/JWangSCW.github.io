@@ -3,8 +3,8 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  // ⚠️ TODO(you): replace with the real domain you'll use
-  site: 'https://jiaqiwang.dev',
+  // Deployed on GitHub Pages — https://jwanscw.github.io
+  site: 'https://jwanscw.github.io',
   trailingSlash: 'always',
   i18n: {
     locales: ['en', 'fr'],
