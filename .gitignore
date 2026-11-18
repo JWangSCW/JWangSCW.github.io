@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# personal CV dropped in repo root — never commit
+/CV*.pdf
