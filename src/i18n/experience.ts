@@ -30,14 +30,17 @@ export const experience: Record<Locale, ExperienceItem[]> = {
   en: [
     {
       id: 'scaleway',
-      when: '2025 — present', // ⚠️ verify start date
+      when: 'Mar 2025 — present',
       org: 'Scaleway — European sovereign cloud (Paris)',
-      role: 'Cloud Solutions Architect',
+      role: 'Partner Solutions Architect',
       current: true,
       bullets: [
-        'Architect cloud solutions for European sovereign-cloud adoption: discovery, architecture, TCO and proposal documentation.',
-        'Design migrations from hyperscalers to EU-sovereign infrastructure, addressing data residency and Cloud Act exposure.',
-        'Run technical workshops and pre-sales PoCs for regulated and digital-sector customers.',
+        'Co-created the Scaleway Solutions Architect certification (curriculum + exam bank) and filled the presales-training gap with a 2-month in-person programme — weekly sessions for partners’ Account Managers and IT directors (DSI).',
+        'Drove the Scaleway Landing Zone framework (whitepaper + toolkit); the Landing Zone POC contributed to winning the Airbus account.',
+        'Led enterprise and public-sector bids: a 3-hour technical defence for the EDF 2028–2035 framework covering 12 cloud-architecture use cases, plus contributions to a European Commission–Atos multi-region hub-and-spoke Rancher datahub bid and the RATP architecture response — bid modules reused on Mediawan and others.',
+        'Ran channel deep-dives (Immersion Days, hackathons) with partners such as Deloitte NL/FR, Play (Poland) and Reply (Italy); delivered a 40-minute on-stage pitch at Rockstar Valley 2025 (70+ attendees) and a 2026 session on hyperscaler multi-cloud patterns.',
+        'Advised partners day-to-day: architecture reviews (HLD), RFI/RFP authoring, pricing support and technical expert attendance in partner–customer meetings.',
+        'ISV technical pre-sales: Build-or-Buy studies; landed Mulesoft’s Data Plane on Rancher + Kapsule; exposed Scaleway Cockpit metrics/logs to Dynatrace SaaS via OpenTelemetry and direct agents.',
       ],
     },
     {
@@ -95,14 +98,17 @@ export const experience: Record<Locale, ExperienceItem[]> = {
   fr: [
     {
       id: 'scaleway',
-      when: '2025 — aujourd’hui', // ⚠️ à vérifier
+      when: 'Mars 2025 — aujourd’hui',
       org: 'Scaleway — cloud souverain européen (Paris)',
-      role: 'Architecte de solutions cloud',
+      role: 'Partner Solutions Architect',
       current: true,
       bullets: [
-        'Conception de solutions cloud pour l’adoption du cloud souverain européen : découverte, architecture, TCO et documentation.',
-        'Conception de migrations depuis les hyperscalers vers une infrastructure souveraine européenne (résidence des données, Cloud Act).',
-        'Animation de workshops techniques et de PoC en avant-vente pour des clients régulés et digitaux.',
+        'Co-créé la certification Scaleway Solutions Architect (contenu + base de questions d’examen) et comblé le manque de formation presales avec un programme de 2 mois en présentiel — sessions hebdomadaires pour les Account Managers et DSI des partenaires.',
+        'Porté le cadre Landing Zone de Scaleway (livre blanc + toolkit) ; le POC Landing Zone a contribué à remporter le compte Airbus.',
+        'Piloté des appels d’offres grands comptes et publics : soutenance technique de 3 h pour l’accord-cadre EDF 2028–2035 couvrant 12 cas d’usage d’architecture cloud, participation à la réponse Commission européenne – Atos (hub-and-spoke multi-régions, Rancher, Datahub) et à la réponse RATP — modules d’offre réutilisés sur Mediawan et d’autres projets.',
+        'Animé des sessions d’immersion et hackathons avec Deloitte NL/FR, Play (Pologne) et Reply (Italie) ; pitch de 40 minutes sur scène à Rockstar Valley 2025 (70+ participants) et intervention en 2026 sur les patterns multi-cloud avec les hyperscalers.',
+        'Accompagnement quotidien des partenaires : revues d’architecture (HLD), rédaction de RFI/RFP, support au chiffrage et participation en tant qu’expert technique aux réunions partenaires–clients.',
+        'Avant-vente technique ISV : études Build-or-Buy ; déploiement du Data Plane Mulesoft sur Rancher + Kapsule ; exposition des métriques/logs de Scaleway Cockpit vers Dynatrace SaaS (OpenTelemetry, agents directs).',
       ],
     },
     {
