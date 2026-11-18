@@ -1,9 +1,9 @@
 ---
-title: "AWS Solutions Architect Associate"
+title: "AWS Solutions Architect — Associate"
 issuer: "AWS"
-issued: "20XX"
+issued: "20XX" # ⚠️ TODO: année
 group: "cloud"
 draft: true
 order: 90
 ---
-<!-- Brouillon — ajoutez la vraie certification : date, credential ID et URL de vérification, puis passé draft: false -->
+<!-- Certificat réel issu de votre CV. Ajoutez l'année + l'URL du credential, puis passé draft: false -->

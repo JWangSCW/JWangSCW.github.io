@@ -18,45 +18,76 @@ export interface EducationItem {
 }
 
 /**
- * ⚠️ TODO(you): verify dates, orgs and bullets. The details below are educated
- * placeholders built from your public LinkedIn profile — correct them freely.
+ * Career timeline — real data transcribed from your CV (Sep 2024) and your
+ * current LinkedIn profile (Scaleway).
+ *
+ * ⚠️ TODO(you): verify a few transitions:
+ *  - when you started at Scaleway (currently shown as "2025 — present")
+ *  - the exact boundaries between the three Capgemini roles
+ *  - the education entries below are still placeholders.
  */
 export const experience: Record<Locale, ExperienceItem[]> = {
   en: [
     {
       id: 'scaleway',
-      when: '2024 — present',
+      when: '2025 — present', // ⚠️ verify start date
       org: 'Scaleway — European sovereign cloud (Paris)',
       role: 'Cloud Solutions Architect',
       current: true,
       bullets: [
-        'Design cloud solutions in pre-sales: technical discovery, architecture, TCO and proposal documentation for customers across regulated and digital sectors.',
-        'Architect migrations from US hyperscalers (AWS) to European sovereign infrastructure, addressing data residency, Cloud Act exposure and operating-cost trade-offs.',
-        'Run technical workshops, PoCs and demos; support our delivery teams and capture reference architectures.',
+        'Architect cloud solutions for European sovereign-cloud adoption: discovery, architecture, TCO and proposal documentation.',
+        'Design migrations from hyperscalers to EU-sovereign infrastructure, addressing data residency and Cloud Act exposure.',
+        'Run technical workshops and pre-sales PoCs for regulated and digital-sector customers.',
       ],
     },
     {
-      id: 'huawei',
-      when: '2021 — 2024', // ⚠️ verify
-      org: 'Huawei Cloud (CloudBU)',
-      role: 'Cloud Solutions Architect',
+      id: 'capgemini-migration',
+      when: 'Feb 2024 — 2025',
+      org: 'Capgemini',
+      role: 'Lead Cloud Migration Engineer',
       current: false,
       bullets: [
-        'Pre-sales solution design and enablement on public cloud, with a focus on serverless offerings (FunctionGraph).',
-        'Recognised with the «FE Engine Public Cloud MKT support outstanding individual» award (Jul 2021).',
-        'Built reference architectures and PoCs; supported marketing-to-sales technical motions and partner enablement.',
+        'Led the migration of a 20 TB enterprise data lake to AWS (Site-to-Site VPN, Transit Gateway, AWS DMS, Transfer Family), cutting cloud costs by 25%.',
+        'Integrated 15+ critical applications with the AWS data lake with zero operational interruption.',
+        'Supervised data flows into S3 and Snowflake External Stage; standardised a Terraform module for AWS DMS reused by 90% of the programme’s projects, cutting deployment time by 40%.',
+        'Orchestrated post-migration sync with AWS Glue and Athena, delivering assessment reports within 24 hours.',
       ],
     },
     {
-      id: 'energy',
-      when: '2016 — 2019', // ⚠️ verify
-      org: 'Applied economics · energy & climate data (Grenoble, France)',
-      role: 'Research & analysis',
+      id: 'capgemini-ops',
+      when: 'Jun 2022 — Feb 2024',
+      org: 'Capgemini',
+      role: 'Lead Cloud Ops',
       current: false,
       bullets: [
-        'Conducted quantitative studies: municipal carbon footprints, renewable-energy network coordination and energy-renovation subsidy leverage (Excel, Stata).',
-        'Co-authored a peer-reviewed mechanism-design paper on power-market tacit collusion (2018).',
-        'Built the analytical mindset that later translated into cost modelling and cloud TCO work.',
+        'Drove a multi-country migration for an international client spanning 9 countries and 30+ environments, managing regional configurations.',
+        'Deployed a multi-environment CI/CD pipeline (GitHub + TeamCity), reducing deployment cycles by 40%.',
+        'Maintained cloud architectures compliant with cybersecurity standards — a clean audit record throughout.',
+        'Designed resilient, scalable architectures sustaining a 99.99% SLA while supporting a 50% traffic increase.',
+      ],
+    },
+    {
+      id: 'capgemini-architect',
+      when: 'Feb 2022 — Jun 2022',
+      org: 'Capgemini',
+      role: 'Cloud Architect — associate architect community',
+      current: false,
+      bullets: [
+        'Supported the AWS Landing Zone build for TotalEnergies across multiple regions, embedding AWS best practices, cost planning and technical procurement.',
+        'Worked pre-sales on a supply-chain OMS modernisation on GCP: micro-services hosting (GKE Autopilot, Apigee gateway, CloudSQL, MongoDB, Kafka Confluent) and a DevOps layer (ELK, Grafana, Prometheus, GitLab SaaS), balancing FRs and NFRs.',
+        'Authored HLD, LLD and DevOps documentation; shared best practices with cybersecurity and architecture communities.',
+      ],
+    },
+    {
+      id: 'manning',
+      when: 'Sep 2019 — Jan 2022',
+      org: 'Manning Global — Huawei Flexible Engine platform',
+      role: 'Cloud Infrastructure Engineer',
+      current: false,
+      bullets: [
+        'Collaborated with technical teams to identify and resolve 500+ incidents on the Flexible Engine cloud platform.',
+        'Implemented compute and storage server virtualisation, raising processing capacity by 30% and deploying new availability zones for Huawei CBG in Europe.',
+        'Shipped new platform features — including AI acceleration and Bare Metal Server — reducing compute times by 20%.',
       ],
     },
   ],
@@ -64,46 +95,73 @@ export const experience: Record<Locale, ExperienceItem[]> = {
   fr: [
     {
       id: 'scaleway',
-      when: '2024 — aujourd’hui',
+      when: '2025 — aujourd’hui', // ⚠️ à vérifier
       org: 'Scaleway — cloud souverain européen (Paris)',
       role: 'Architecte de solutions cloud',
       current: true,
       bullets: [
-        'Conception de solutions cloud en avant-vente : découverte technique, architecture, TCO et documentation de propositions pour des clients de secteurs régulés et digitaux.',
-        'Conception de migrations depuis les hyperscalers US (AWS) vers une infrastructure souveraine européenne, en traitant résidence des données, exposition au Cloud Act et arbitrages de coûts.',
-        'Animation de workshops techniques, PoC et démos ; appui aux équipes de delivery et capitalisation sur les architectures de référence.',
+        'Conception de solutions cloud pour l’adoption du cloud souverain européen : découverte, architecture, TCO et documentation.',
+        'Conception de migrations depuis les hyperscalers vers une infrastructure souveraine européenne (résidence des données, Cloud Act).',
+        'Animation de workshops techniques et de PoC en avant-vente pour des clients régulés et digitaux.',
       ],
     },
     {
-      id: 'huawei',
-      when: '2021 — 2024', // ⚠️ à vérifier
-      org: 'Huawei Cloud (CloudBU)',
-      role: 'Architecte de solutions cloud',
+      id: 'capgemini-migration',
+      when: 'Févr. 2024 — 2025',
+      org: 'Capgemini',
+      role: 'Lead Cloud Migration Engineer',
       current: false,
       bullets: [
-        'Conception de solutions et enablement en avant-vente cloud public, avec un focus sur les offres serverless (FunctionGraph).',
-        'Distingué par le prix « FE Engine Public Cloud MKT support outstanding individual » (juil. 2021).',
-        'Réalisation d’architectures de référence et de PoC ; appui technique des campagnes marketing-to-sales et enablement des partenaires.',
+        'Conduit la migration d’un datalake de 20 To vers AWS (Site-to-Site VPN, Transit Gateway, AWS DMS, Transfer Family), réduisant les coûts cloud de 25 %.',
+        'Intégré plus de 15 applications critiques au datalake AWS avec une continuité opérationnelle sans interruption.',
+        'Supervisé les flux de données vers S3 et Snowflake External Stage ; standardisé un module Terraform pour AWS DMS réutilisé par 90 % des projets du programme, réduisant le temps de déploiement de 40 %.',
+        'Orchestré la synchronisation post-migration avec AWS Glue et Athena, avec des rapports d’évaluation livrés sous 24 heures.',
       ],
     },
     {
-      id: 'energy',
-      when: '2016 — 2019', // ⚠️ à vérifier
-      org: 'Économie appliquée · énergie & données climat (Grenoble)',
-      role: 'Recherche & analyse',
+      id: 'capgemini-ops',
+      when: 'Juin 2022 — Févr. 2024',
+      org: 'Capgemini',
+      role: 'Lead Cloud Ops',
       current: false,
       bullets: [
-        'Études quantitatives : bilans carbone communaux, coordination des investissements réseaux pour les énergies renouvelables, effet de levier des subventions de rénovation (Excel, Stata).',
-        'Co-auteur d’un article de conception de mécanismes sur la collusion tacite dans les marchés de l’électricité (2018).',
-        'Un socle analytique réinvesti depuis dans la modélisation des coûts et le TCO cloud.',
+        'Piloté une migration multi-pays pour un client international couvrant 9 pays et 30+ environnements, en gérant les configurations régionales.',
+        'Déployé un pipeline CI/CD multi-environnements (GitHub + TeamCity), réduisant les cycles de déploiement de 40 %.',
+        'Maintenu la conformité des architectures cloud aux standards de cybersécurité — historique sans incident.',
+        'Conçu des architectures résilientes et scalables maintenant un SLA de 99,99 % tout en soutenant une hausse du trafic de 50 %.',
+      ],
+    },
+    {
+      id: 'capgemini-architect',
+      when: 'Févr. 2022 — Juin 2022',
+      org: 'Capgemini',
+      role: 'Cloud Architect — communauté d’architectes',
+      current: false,
+      bullets: [
+        'Soutien à la création de la Landing Zone AWS de TotalEnergies sur plusieurs régions, en intégrant les bonnes pratiques AWS, la planification des coûts et l’approvisionnement technique.',
+        'Avant-vente de la modernisation d’un système de supply chain (OMS) sur GCP : hébergement de micro-services (GKE Autopilot, passerelle Apigee, CloudSQL, MongoDB, Kafka Confluent) et couche DevOps (ELK, Grafana, Prometheus, GitLab SaaS), en considérant les FR et NFR.',
+        'Rédaction du HLD, du LLD et de la documentation DevOps ; partage des bonnes pratiques avec les équipes cybersécurité et les communautés d’architectes.',
+      ],
+    },
+    {
+      id: 'manning',
+      when: 'Sept. 2019 — Janv. 2022',
+      org: 'Manning Global — plateforme Huawei Flexible Engine',
+      role: 'Ingénieur d’infrastructure cloud',
+      current: false,
+      bullets: [
+        'Collaboré avec les équipes techniques pour identifier et résoudre plus de 500 incidents sur la plateforme Flexible Engine.',
+        'Implémenté la virtualisation des serveurs de calcul et de stockage, augmentant la capacité de traitement de 30 %, et déployé de nouvelles zones de disponibilité pour Huawei CBG en Europe.',
+        'Livré de nouvelles fonctionnalités de plateforme — dont l’accélération IA et le Bare Metal Server — réduisant les temps de calcul de 20 %.',
       ],
     },
   ],
 };
 
 /**
- * ⚠️ TODO(you): education is a placeholder — replace with your real degrees
- * (institution, title, years). The Grenoble work is inferred from your profile.
+ * Education — ⚠️ still a placeholder. Your CV (Sep 2024) does not list degrees;
+ * this entry is inferred from your LinkedIn activity in Grenoble (2016–2019) and
+ * the IFP School course (2019). Send me your exact degrees and I’ll fill this in.
  */
 export const education: Record<Locale, EducationItem[]> = {
   en: [
