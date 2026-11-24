@@ -45,18 +45,6 @@ const projects = defineCollection({
   }),
 });
 
-const posts = defineCollection({
-  loader: glob({ base: './src/content/posts', pattern: '**/*.md' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    tags: z.array(z.string()).default([]),
-    draft: z.boolean().default(false),
-    featured: z.boolean().default(false),
-  }),
-});
-
 const certs = defineCollection({
   loader: glob({ base: './src/content/certs', pattern: '**/*.md' }),
   schema: z.object({
@@ -71,4 +59,4 @@ const certs = defineCollection({
   }),
 });
 
-export const collections = { cases, projects, posts, certs };
+export const collections = { cases, projects, certs };

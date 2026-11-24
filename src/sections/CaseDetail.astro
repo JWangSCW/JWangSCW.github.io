@@ -31,7 +31,7 @@ const next = idx === -1 ? undefined : siblings[(idx + 1) % siblings.length];
     {
       entry.data.template && (
         <div class="template-ribbon">
-          ⚠️ {t(lang, 'cases.template')} — {t(lang, 'cases.templateHint')}
+          ⚠️ {t(lang, 'cases.template')}: {t(lang, 'cases.templateHint')}
         </div>
       )
     }
@@ -43,7 +43,7 @@ const next = idx === -1 ? undefined : siblings[(idx + 1) % siblings.length];
 <section class="section" style="padding-top: 36px;">
   <div class="container">
     <div class="article-meta reveal" style="--d:2">
-      <div class="impact-box" style="font-size: 15px;">{t(lang, 'cases.impact')} — {entry.data.impact}</div>
+      <div class="impact-box" style="font-size: 15px;">{t(lang, 'cases.impact')}: {entry.data.impact}</div>
       <div class="meta-grid">
         <div><span class="m-label">{t(lang, 'cases.meta.client')}</span>{entry.data.client}</div>
         <div><span class="m-label">{t(lang, 'cases.meta.role')}</span>{entry.data.role}</div>

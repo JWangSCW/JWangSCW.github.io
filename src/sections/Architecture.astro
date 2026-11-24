@@ -14,15 +14,15 @@ const rows = [
     layer: fr ? 'Front-end' : 'Frontend',
     tech: 'Astro (static generation)',
     why: fr
-      ? 'Statique d’abord : rapide, sécurisé, gratuit à héberger — et piloté par du contenu Markdown que je peux éditer sans toucher au code.'
-      : 'Static-first: fast, secure and cheap to host — and driven by Markdown content I can edit without touching code.',
+      ? 'Statique d’abord : rapide, sécurisé, gratuit à héberger, et piloté par du contenu Markdown que je peux éditer sans toucher au code.'
+      : 'Static-first: fast, secure and cheap to host, and driven by Markdown content I can edit without touching code.',
   },
   {
     layer: fr ? 'Contenu' : 'Content',
     tech: 'Markdown content collections',
     why: fr
-      ? 'Études de cas, projets, articles et certifications vivent dans des fichiers .md bilingues (en/ fr), validés par un schéma.'
-      : 'Case studies, projects, posts and credentials live as bilingual (en/fr) Markdown files validated by a schema.',
+      ? 'Études de cas, projets et certifications vivent dans des fichiers .md bilingues (en/fr), validés par un schéma.'
+      : 'Case studies, projects and credentials live as bilingual (en/fr) Markdown files validated by a schema.',
   },
   {
     layer: 'CI/CD',
@@ -35,8 +35,8 @@ const rows = [
     layer: 'IaC',
     tech: 'Terraform / OpenTofu',
     why: fr
-      ? 'Domaine, DNS et projet d’hébergement sont décrits en code (./infra) — reproductibles et audités.'
-      : 'Domain, DNS and the hosting project are described as code (./infra) — reproducible and auditable.',
+      ? 'Domaine, DNS et projet d’hébergement sont décrits en code (./infra), reproductibles et audités.'
+      : 'Domain, DNS and the hosting project are described as code (./infra), reproducible and auditable.',
   },
   {
     layer: fr ? 'Hébergement' : 'Hosting',
@@ -49,8 +49,8 @@ const rows = [
     layer: fr ? 'Observabilité' : 'Observability',
     tech: 'Analytics + uptime monitor',
     why: fr
-      ? 'Trafic et disponibilité suivis (Cloudflare Analytics, UptimeRobot) — un site sans monitoring n’est pas une plateforme.'
-      : 'Traffic and availability tracked (Cloudflare Analytics, UptimeRobot) — a site without monitoring is not a platform.',
+      ? 'Trafic et disponibilité suivis (Cloudflare Analytics, UptimeRobot) : un site sans monitoring n’est pas une plateforme.'
+      : 'Traffic and availability tracked (Cloudflare Analytics, UptimeRobot): a site without monitoring is not a platform.',
   },
 ];
 
@@ -60,14 +60,14 @@ const steps = fr
       'GitHub Actions build le site (Astro) et valide les schémas de contenu.',
       'Terraform garantit que le domaine, le DNS et l’hébergement correspondent au code.',
       'Le résultat est publié sur le CDN en quelques secondes, en HTTPS.',
-      'Le tout est versionné, réparable et re-déployable en un clic — exactement la discipline que je vends aux clients.',
+      'Le tout est versionné, réparable et re-déployable en un clic, exactement la discipline que je vends aux clients.',
     ]
   : [
       'I edit content in Markdown (or code) in the Git repository.',
       'GitHub Actions builds the site (Astro) and validates content schemas.',
       'Terraform ensures domain, DNS and hosting match the code.',
       'The result is published to the CDN within seconds, over HTTPS.',
-      'Everything is versioned, recoverable and redeployable in one click — exactly the discipline I sell to customers.',
+      'Everything is versioned, recoverable and redeployable in one click, exactly the discipline I sell to customers.',
     ];
 ---
 
@@ -85,7 +85,7 @@ const steps = fr
       <svg viewBox="0 0 760 320" role="img" aria-label="architecture diagram">
         <defs>
           <marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
-            <path d="M0,0 L7,3.5 L0,7 Z" fill="#4fd1ff" />
+            <path d="M0,0 L7,3.5 L0,7 Z" fill="#0b9ed8" />
           </marker>
         </defs>
 
@@ -134,7 +134,7 @@ const steps = fr
           <text x="75" y="46" style="text-anchor:middle" class="sub">Visitor</text>
         </g>
       </svg>
-      <figcaption>{fr ? 'Schéma de déploiement de ce site — diagramme à titre illustratif.' : 'Deployment schematic of this site — illustrative diagram.'}</figcaption>
+      <figcaption>{fr ? 'Schéma de déploiement de ce site, à titre illustratif.' : 'Deployment schematic of this site, illustrative diagram.'}</figcaption>
     </figure>
 
     <div style="height: 46px;"></div>
@@ -173,7 +173,7 @@ const steps = fr
     border: 1px solid var(--line);
     border-radius: var(--radius);
     background:
-      radial-gradient(500px 200px at 30% 0%, rgba(141, 123, 255, 0.08), transparent 60%),
+      radial-gradient(500px 200px at 30% 0%, rgba(106, 75, 255, 0.09), transparent 60%),
       linear-gradient(180deg, var(--panel-2), var(--panel));
     padding: 18px;
     max-width: 860px;

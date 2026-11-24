@@ -10,7 +10,6 @@ export const SITE = {
   email: 'xavier.wangjiaqi@gmail.com',
   linkedin: 'https://www.linkedin.com/in/jiaqi-wang-cloud',
   github: 'https://github.com/JWangSCW', // ⚠️ TODO(you): point to the GitHub account you want visible
-  resumeUrl: '/resume.pdf', // ⚠️ TODO(you): drop your (PDF) resume in public/ to enable download
   available: true, // false while not on the market
-  providers: ['AWS', 'GCP', 'Azure', 'Terraform', 'Snowflake', 'FinOps'],
+  providers: ['AWS', 'GCP', 'Azure', 'Scaleway', 'Terraform', 'FinOps'],
 } as const;

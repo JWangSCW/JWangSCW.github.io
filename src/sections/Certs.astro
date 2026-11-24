@@ -43,10 +43,14 @@ const all = (await getEntries('certs', lang))
                 <div class:list={{ cert: true, draft: c.data.draft }}>
                   <div class="issuer">{c.data.issuer}</div>
                   <div class="title">{c.data.title}</div>
-                  <div class="when">
-                    {t(lang, 'certs.issued')} {c.data.issued}
-                    {c.data.credentialId && ` · ID ${c.data.credentialId}`}
-                  </div>
+                  {
+                    c.data.issued && (
+                      <div class="when">
+                        {t(lang, 'certs.issued')} {c.data.issued}
+                        {c.data.credentialId && ` · ID ${c.data.credentialId}`}
+                      </div>
+                    )
+                  }
                   {
                     c.data.credentialUrl ? (
                       <a class="verify" href={c.data.credentialUrl} target="_blank" rel="noopener">

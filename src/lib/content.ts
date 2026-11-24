@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 export type Locale = 'en' | 'fr';
 
 /** All entries of a collection for a given locale (entries are stored as <locale>/<slug>.md). */
-export async function getEntries<T extends 'cases' | 'projects' | 'posts' | 'certs'>(
+export async function getEntries<T extends 'cases' | 'projects' | 'certs'>(
   collection: T,
   locale: Locale,
 ) {

@@ -1,0 +1,60 @@
+---
+interface Props {
+  /** Final numeric value to count up to. */
+  value: number;
+  /** Metric label shown under the number. */
+  label: string;
+  /** Text before the number (e.g. "~"). */
+  prefix?: string;
+  /** Text after the number (e.g. "+" or "%"). */
+  suffix?: string;
+}
+
+const { value, label, prefix = '', suffix = '' } = Astro.props;
+---
+
+<div class="metric">
+  <span class="v" data-count={value} data-prefix={prefix} data-suffix={suffix}>
+    {prefix}0{suffix}
+  </span>
+  <span class="l">{label}</span>
+</div>
+
+<script>
+  const counters = [...document.querySelectorAll<HTMLElement>('.metric .v[data-count]')];
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const render = (el: HTMLElement, n: number) => {
+    el.textContent = `${el.dataset.prefix ?? ''}${n}${el.dataset.suffix ?? ''}`;
+  };
+
+  const animate = (el: HTMLElement) => {
+    const target = Number(el.dataset.count);
+    const duration = 1100;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+      render(el, Math.round(eased * target));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  if (reduced || !('IntersectionObserver' in window)) {
+    counters.forEach((el) => render(el, Number(el.dataset.count)));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const el = entry.target as HTMLElement;
+          io.unobserve(el);
+          animate(el);
+        }
+      },
+      { threshold: 0.4 }
+    );
+    counters.forEach((el) => io.observe(el));
+  }
+</script>

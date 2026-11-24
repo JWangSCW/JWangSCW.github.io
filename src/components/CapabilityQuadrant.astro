@@ -1,0 +1,90 @@
+---
+import { t } from '../i18n/ui';
+import type { Locale } from '../lib/content';
+import SectionHead from '../components/SectionHead.astro';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+interface Cell {
+  id: 'tl' | 'tr' | 'bl' | 'br';
+  now?: boolean;
+  line: string;
+}
+
+const cells: Cell[] = [
+  { id: 'tl', line: t(lang, 'quad.tl.1') },
+  { id: 'tr', now: true, line: t(lang, 'quad.tr.1') },
+  { id: 'bl', line: t(lang, 'quad.bl.1') },
+  { id: 'br', line: t(lang, 'quad.br.1') },
+];
+---
+
+<section class="section section--alt">
+  <div class="container">
+    <SectionHead lang={lang} kickerKey="quad.kicker" titleKey="quad.title" subKey="quad.sub" />
+
+    <div class="quad reveal" style="--d:2" data-quad>
+      <div class="quad-axis quad-axis--top">
+        <span class="arrow">↑</span>
+        {t(lang, 'quad.axis.soft')}
+      </div>
+
+      {
+        cells.map((cell, i) => (
+          <article class:list={{ 'quad-cell': true, 'quad-cell--now': cell.now }} style={`--d:${i + 2}`}>
+            <span class="quad-tag">{t(lang, `quad.${cell.id}.tag`)}</span>
+            <h3>{t(lang, `quad.${cell.id}.title`)}</h3>
+            <p class="quad-line">{cell.line}</p>
+          </article>
+        ))
+      }
+
+      <div class="quad-axis quad-axis--bottom">
+        <span class="arrow">→</span>
+        {t(lang, 'quad.axis.hard')}
+      </div>
+
+      <p class="quad-arc">{t(lang, 'quad.arc')}</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* Four-phase highlight: each cell lights up in career order (BL → BR → TL → TR),
+     looping while the quadrant is on screen. The "now" cell lingers longest. */
+  (function () {
+    const quad = document.querySelector<HTMLElement>('[data-quad]');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!quad || reduced) return;
+
+    const cells = [...quad.querySelectorAll<HTMLElement>('.quad-cell')];
+    if (cells.length !== 4) return;
+
+    const order = [2, 3, 0, 1]; // BL → BR → TL → TR (DOM order is tl, tr, bl, br)
+    const holds = [1300, 1300, 1300, 1900]; // ms per stop; the "now" cell lingers
+
+    let timer = 0;
+    const cycle = (i: number) => {
+      cells.forEach((c) => c.classList.remove('visited'));
+      cells[order[i]].classList.add('visited');
+      timer = window.setTimeout(() => cycle((i + 1) % order.length), holds[i]);
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          io.disconnect();
+          // wait for the section reveal to settle before starting
+          window.setTimeout(() => cycle(0), 600);
+        }
+      },
+      { threshold: 0.25 }
+    );
+    io.observe(quad);
+  })();
+</script>

@@ -13,6 +13,16 @@ interface Props {
 const { lang } = Astro.props;
 const items = experience[lang];
 const edu = education[lang];
+
+/** Company / institution marks shown next to org names (grayscale via CSS). */
+const logoMap: Record<string, string> = {
+  scaleway: '/logos/scaleway.svg',
+  'capgemini-migration': '/logos/capgemini.svg',
+  'capgemini-ops': '/logos/capgemini.svg',
+  'capgemini-architect': '/logos/capgemini.svg',
+  manning: '/logos/manning.png',
+  master: '/logos/uga.svg',
+};
 ---
 
 <section class="page-head">
@@ -31,10 +41,24 @@ const edu = education[lang];
           <div class:list={{ 't-item': true, current: item.current }} style={`--d:${i}`}>
             <div class="t-when">{item.when}</div>
             <h3>{item.role}</h3>
-            <div class="t-org">{item.org}</div>
+            <div class="t-org">
+              {logoMap[item.id] && <img class="t-logo" src={logoMap[item.id]} alt="" loading="lazy" />}
+              {item.org}
+            </div>
             <ul>
               {item.bullets.map((b) => <li>{b}</li>)}
             </ul>
+            {
+              item.links && item.links.length > 0 && (
+                <ul class="t-links">
+                  {item.links.map((l) => (
+                    <li>
+                      <a href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a>
+                    </li>
+                  ))}
+                </ul>
+              )
+            }
           </div>
         ))
       }
@@ -49,7 +73,10 @@ const edu = education[lang];
       {
         edu.map((e) => (
           <div class="cert">
-            <div class="issuer">{e.school}</div>
+            <div class="issuer">
+              {logoMap[e.id] && <img class="t-logo" src={logoMap[e.id]} alt="" loading="lazy" />}
+              {e.school}
+            </div>
             <div class="title">{e.degree}</div>
             <div class="when">{e.when}</div>
             <p style="font-size: 14px; color: var(--txt-2); line-height: 1.65; margin-top: 2px;">{e.details}</p>

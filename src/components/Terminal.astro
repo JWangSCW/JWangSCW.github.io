@@ -14,6 +14,18 @@ const lines = [
   { cmd: t(lang, 'term.3.cmd'), out: t(lang, 'term.3.out'), ok: true },
   { cmd: t(lang, 'term.4.cmd'), out: t(lang, 'term.4.out'), ok: true },
 ];
+
+/** Commands accepted once the terminal becomes interactive. */
+const cmds = {
+  help: t(lang, 'term.cmd.help.out'),
+  cv: t(lang, 'term.cmd.cv.out'),
+  stack: t(lang, 'term.cmd.stack.out'),
+  whoami: t(lang, 'term.cmd.whoami.out'),
+  contact: t(lang, 'term.cmd.contact.out'),
+  bad: t(lang, 'term.cmd.bad'),
+  badHint: t(lang, 'term.cmd.badHint'),
+  hint: t(lang, 'term.cmd.hint'),
+};
 ---
 
 <div class="terminal">
@@ -23,7 +35,7 @@ const lines = [
     <span class="t-dot"></span>
     <span class="t-title">~/{t(lang, 'hero.terminal.title')}</span>
   </div>
-  <div class="terminal-body" data-terminal>
+  <div class="terminal-body" data-terminal data-cmds={JSON.stringify(cmds)}>
     {
       lines.map((line) => (
         <>
@@ -67,6 +79,77 @@ const lines = [
       line.classList.add('typed');
       await delay(210);
     }
+
+    cursor.remove();
+
+    // typing done: hand the terminal over to the visitor
+    const body = document.querySelector<HTMLElement>('[data-terminal]');
+    if (body) {
+      body.style.justifyContent = 'flex-start';
+      body.querySelectorAll('.cursor').forEach((c) => c.remove());
+      startInteractive(body);
+    }
+  }
+
+  const escapeHtml = (s: string) =>
+    s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+  function startInteractive(body: HTMLElement) {
+    const cmds = JSON.parse(body.dataset.cmds ?? '{}') as Record<string, string>;
+    const hint = cmds.hint ?? '';
+
+    const scrollDown = () => {
+      body.scrollTop = body.scrollHeight;
+    };
+
+    const appendLine = (html: string) => {
+      const line = document.createElement('span');
+      line.className = 'term-line typed';
+      line.innerHTML = html;
+      body.appendChild(line);
+      scrollDown();
+    };
+
+    const makePrompt = () => {
+      const placeholder = escapeHtml(hint);
+      const line = document.createElement('span');
+      line.className = 'term-line typed';
+      line.innerHTML = `<span class="prompt">$ </span><span class="cmd-input" contenteditable="true" spellcheck="false" data-placeholder="${placeholder}"></span>`;
+      body.appendChild(line);
+      scrollDown();
+
+      const input = line.querySelector<HTMLElement>('.cmd-input');
+      if (!input) return;
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const raw = input.textContent ?? '';
+          const cmd = raw.trim().toLowerCase();
+          line.remove();
+          if (cmd === 'clear') {
+            body.querySelectorAll('.term-line').forEach((l) => l.remove());
+          } else if (cmd) {
+            const out = cmds[cmd];
+            if (out) {
+              appendLine(`<span class="ok">→</span>&nbsp;${escapeHtml(out)}`);
+            } else {
+              appendLine(`<span class="term-out">${escapeHtml(cmds.bad ?? '')} <b class="ok">${escapeHtml(raw.trim())}</b> ${escapeHtml(cmds.badHint ?? '')}</span>`);
+            }
+          }
+          makePrompt();
+        } else if (e.key === ' ') {
+          e.stopPropagation();
+        }
+      });
+      input.focus();
+    };
+
+    body.addEventListener('click', () => {
+      body.querySelector<HTMLElement>('.cmd-input')?.focus();
+    });
+
+    makePrompt();
   }
 
   // start after a beat so the page paints first
@@ -74,7 +157,7 @@ const lines = [
 </script>
 
 <style>
-  /* hidden only when JS is present — lines are revealed as they are typed */
+  /* hidden only when JS is present: lines are revealed as they are typed */
   html.js .term-line {
     opacity: 0;
   }
